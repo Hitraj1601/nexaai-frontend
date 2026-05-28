@@ -34,6 +34,12 @@ const Settings = () => {
       return;
     }
 
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      toast.error('Please sign in again to delete your account');
+      return;
+    }
+
     try {
       setIsDeleting(true);
 
@@ -41,7 +47,7 @@ const Settings = () => {
         method: 'DELETE',
         credentials: 'include',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });

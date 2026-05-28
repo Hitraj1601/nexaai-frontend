@@ -65,6 +65,14 @@ const SignUp = () => {
 
       // Registration successful
       console.log('Registration response data:', json?.data);
+
+      // Store token if the backend returns one (mirrors SignIn behavior)
+      const token = json?.data?.token;
+      if (token) {
+        localStorage.setItem('accessToken', token);
+      } else {
+        console.warn('No token found in registration response. Expected json.data.token. Full response:', json);
+      }
       
       toast.success('Account created successfully! Please sign in to continue.');
       navigate('/signin');
