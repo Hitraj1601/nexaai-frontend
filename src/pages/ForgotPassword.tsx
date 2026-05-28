@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Mail, ArrowLeft, Loader2 } from "lucide-react";
+import { toApiUrl } from '@/lib/api';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -35,7 +36,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/auth/forgot-password`, {
+      const response = await fetch(toApiUrl('/auth/forgot-password'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

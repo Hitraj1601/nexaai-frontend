@@ -14,7 +14,9 @@ export {
 // Keep the original API for any components that might need it
 import tokenManager from '@/utils/tokenManager';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+import { getApiBaseUrl } from '@/lib/api';
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Legacy API call function (deprecated - use optimized version)
 export const legacyApiCall = async <T>(endpoint: string, options: any = {}): Promise<T> => {

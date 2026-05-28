@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Zap, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
+import { toApiUrl } from '@/lib/api';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -43,8 +44,7 @@ const SignUp = () => {
     setIsLoading(true);
     
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-      const res = await fetch(`${apiUrl}/api/auth/register`, {
+      const res = await fetch(toApiUrl('/auth/register'), {
         method: 'POST',
         credentials: 'include', // important: send/receive cookie
         headers: { 'Content-Type': 'application/json' },

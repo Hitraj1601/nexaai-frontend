@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { PenTool, Copy, Download, RefreshCw, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
+import { toApiUrl } from '@/lib/api';
 
 const ArticleWriter = () => {
   const [prompt, setPrompt] = useState('');
@@ -35,8 +36,6 @@ const ArticleWriter = () => {
     // }, 3000);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-      
       // Check if user is authenticated
       const token = localStorage.getItem('accessToken');
       console.log('Token from localStorage:', token ? 'Present' : 'Not found');
@@ -55,8 +54,8 @@ const ArticleWriter = () => {
         topic: prompt.trim() 
       };
 
-      console.log('Making request to:', `${apiUrl}/api/article/create`);
-      const response = await fetch(`${apiUrl}/api/article/create`, {
+      console.log('Making request to:', toApiUrl('/article/create'));
+      const response = await fetch(toApiUrl('/article/create'), {
         method: 'POST',
         credentials: 'include',
         headers: {

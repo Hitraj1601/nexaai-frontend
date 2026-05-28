@@ -21,6 +21,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { toApiUrl } from '@/lib/api';
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -35,9 +36,8 @@ const Settings = () => {
 
     try {
       setIsDeleting(true);
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-      
-      const response = await fetch(`${apiUrl}/api/auth/delete-account`, {
+
+      const response = await fetch(toApiUrl('/auth/delete-account'), {
         method: 'DELETE',
         credentials: 'include',
         headers: {

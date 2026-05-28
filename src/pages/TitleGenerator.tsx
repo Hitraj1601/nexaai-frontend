@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { FileText, Copy, RefreshCw, Sparkles, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { toApiUrl } from '@/lib/api';
 
 const TitleGenerator = () => {
   const [userContent, setUserContent] = useState('');
@@ -21,8 +22,6 @@ const TitleGenerator = () => {
     setIsGenerating(true);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-      
       // Check if user is authenticated
       const token = localStorage.getItem('accessToken');
       if (!token) {
@@ -30,7 +29,7 @@ const TitleGenerator = () => {
         return;
       }
 
-      const response = await fetch(`${apiUrl}/api/blogtitle/create`, {
+      const response = await fetch(toApiUrl('/blogtitle/create'), {
         method: 'POST',
         credentials: 'include',
         headers: {

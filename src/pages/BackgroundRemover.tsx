@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Scissors, Upload, Download, RefreshCw, Eye, ImageIcon, Info } from 'lucide-react';
 import { toast } from 'sonner';
+import { toApiUrl } from '@/lib/api';
 
 const BackgroundRemover = () => {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
@@ -60,7 +61,6 @@ const BackgroundRemover = () => {
       formData.append('userImgURL', file);
 
       // Determine if user is authenticated and use appropriate endpoint
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
       const token = localStorage.getItem('accessToken');
       const headers: Record<string, string> = {};
       if (token) headers['Authorization'] = `Bearer ${token}`;
@@ -69,7 +69,7 @@ const BackgroundRemover = () => {
       const endpoint = token ? 'removeBG' : 'removeBG-public';
       console.log(`🔍 Using endpoint: ${endpoint}, authenticated: ${!!token}`);
 
-      const response = await fetch(`${apiUrl}/api/background/${endpoint}`, {
+      const response = await fetch(toApiUrl(`/background/${endpoint}`), {
         method: 'POST',
         credentials: 'include',
         headers: headers,

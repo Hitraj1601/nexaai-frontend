@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
 import { useUserProfile } from '@/hooks/useApi';
+import { toApiUrl } from '@/lib/api';
 
 interface DashboardSidebarProps {
   isCollapsed?: boolean;
@@ -42,10 +43,8 @@ const DashboardSidebar = React.memo(({ isCollapsed = false, onToggle }: Dashboar
 
   const handleLogout = useCallback(async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-      
       // Call backend logout to clear cookie
-      await fetch(`${apiUrl}/api/auth/logout`, {
+      await fetch(toApiUrl('/auth/logout'), {
         method: 'POST',
         credentials: 'include',
       });

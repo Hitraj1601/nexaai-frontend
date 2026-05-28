@@ -1,11 +1,10 @@
 // Custom hook for optimized data fetching with caching and deduplication
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import tokenManager from '@/utils/tokenManager';
+import { getApiBaseUrl } from '@/lib/api';
 
-// VITE_API_URL is the base server URL (e.g. http://localhost:3000)
-// This hook appends /api internally, so endpoints here start with /user/, /auth/, etc.
-const _BASE = (import.meta.env.VITE_API_URL || 'http://localhost:3000').replace(/\/$/, '');
-const API_BASE_URL = `${_BASE}/api`;
+// Endpoints are relative to API_BASE_URL (which already includes `/api`).
+const API_BASE_URL = getApiBaseUrl();
 
 interface CacheEntry {
   data: any;

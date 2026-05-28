@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Image, Download, RefreshCw, Sparkles, Grid, Eye } from 'lucide-react';
 import { toast } from 'sonner';
+import { toApiUrl } from '@/lib/api';
 
 interface GeneratedImage {
   id: string;
@@ -27,8 +28,6 @@ const ImageGenerator = () => {
     setIsGenerating(true);
     
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-      
       // Check if user is authenticated
       const token = localStorage.getItem('accessToken');
       if (!token) {
@@ -41,7 +40,7 @@ const ImageGenerator = () => {
         prompt: prompt.trim()
       };
 
-      const response = await fetch(`${apiUrl}/api/image/createimg`, {
+      const response = await fetch(toApiUrl('/image/createimg'), {
         method: 'POST',
         credentials: 'include',
         headers: {

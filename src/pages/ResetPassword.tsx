@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle, Loader2, Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { toApiUrl } from '@/lib/api';
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
@@ -36,7 +37,7 @@ const ResetPassword = () => {
 
   const verifyToken = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/auth/verify-reset-token/${token}`, {
+      const response = await fetch(toApiUrl(`/auth/verify-reset-token/${token}`), {
         method: 'GET',
         credentials: 'include',
       });
@@ -83,7 +84,7 @@ const ResetPassword = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/auth/reset-password`, {
+      const response = await fetch(toApiUrl('/auth/reset-password'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

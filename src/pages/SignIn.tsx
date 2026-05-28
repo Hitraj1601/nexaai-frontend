@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Zap, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { toApiUrl } from '@/lib/api';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -19,20 +21,19 @@ const SignIn = () => {
     password: ''
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     // Call backend login endpoint. Backend sets httpOnly cookie `accessToken`.
     (async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-        const res = await fetch(`${apiUrl}/api/auth/login`, {
+        const res = await fetch(toApiUrl('/auth/login'), {
           method: 'POST',
           credentials: 'include', // important: send/receive cookie
           headers: { 'Content-Type': 'application/json' },
